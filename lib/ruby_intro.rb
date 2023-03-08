@@ -2,6 +2,7 @@
 
 # Part 1
 
+# regex match ruby
 
 
 
@@ -60,19 +61,44 @@ end
 
 def starts_with_consonant?(string)
   if(string == "")
-    return false
+    return nil
   end
-  if ((string.slice(0) =~ /AEIOUaeiou/) or (string.slice(0) !~ /[a-zA-Z]/))
+  if ((string.slice(0) =~ /[AEIOUaeiou]/) or (string.slice(0) !~ /[a-zA-Z]/))
     return false
   end
   return true
 end
 
 def binary_multiple_of_4?(string)
-  if(string !~ /[10]/)
+  if(string == "")
+    return nil
+  end
+
+  if(string =~ /[2-9]/)
     return false
   end
-  return string.to_i(2)%4 == 0
+  #check if string contains only (digits or spaces)
+  for i in 0...string.length() do
+    if((string[i] !~ /\d/) and (string[i] !~ / /))
+      return false
+    end
+  end
+  #check if number ends in 00. We consider spaces in the string as well.
+  i = 1
+  count = 0
+  while(i < (string.length() + 1) and (count < 2))
+    if(string[-i] !~ / /)
+      count += 1
+      if(string[-i] !~ /0/)
+        return false
+      end
+    end
+    i+=1
+  end
+
+  #withstands all tests
+  return true
+
 end
 
 # Part 3
@@ -108,5 +134,8 @@ class BookInStock
   end
 
 end
+
+puts(binary_multiple_of_4?("1000 000"))
+
 
 
